@@ -803,8 +803,15 @@ public class DetailSection {
 				&& (configProperty.getName().equals(DSActionConstants.PASSWORD_PROPERTY)
 						|| configProperty.getName().equals(DSActionConstants.CASSANDRA_PASSWORD))) {
 
-			sectionUtil.getPassWordField(detailsclient, toolkit, configProperty, configProperty.getValue(),
-					DsPackage.eINSTANCE.getConfigurationProperty_Value(), DetailSectionCustomUiConstants.STRING);
+			if (configProperty.getSecretAlias().isEmpty() && !configProperty.getValue().isEmpty()) {
+				sectionUtil.getPassWordField(detailsclient, toolkit, configProperty, configProperty.getValue(),
+						DsPackage.eINSTANCE.getConfigurationProperty_Value(), DetailSectionCustomUiConstants.STRING,
+						false);
+			} else {
+				sectionUtil.getPassWordField(detailsclient, toolkit, configProperty, configProperty.getSecretAlias(),
+						DsPackage.eINSTANCE.getConfigurationProperty_SecretAlias(),
+						DetailSectionCustomUiConstants.STRING, true);
+			}
 
 		} else {
 			sectionUtil.getAttributeField(detailsclient, toolkit, configProperty, configProperty.getValue(),
