@@ -463,11 +463,15 @@ public class DetailSectionUiUtil {
 		}
 	}
 
-	public Text getPassWordField(Composite detailsclient, FormToolkit toolkit,
-			Object input, String existingVal, EAttribute metaObject,
-			String dataType) {
+	public Text getPassWordField(Composite detailsclient, FormToolkit toolkit, Object input, String existingVal,
+			EAttribute metaObject, String dataType, boolean isSecretAlias) {
 
-		Text dtxt = toolkit.createText(detailsclient, "", SWT.PASSWORD);
+		Text dtxt;
+		if (!isSecretAlias) {
+			dtxt = toolkit.createText(detailsclient, "", SWT.PASSWORD);
+		} else {
+			dtxt = toolkit.createText(detailsclient, "");
+		}
 		addCommonActions(dtxt);
 		dtxt.setEditable(true);
 		dtxt.setEnabled(true);
